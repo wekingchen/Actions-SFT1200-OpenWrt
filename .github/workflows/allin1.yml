@@ -80,7 +80,7 @@ jobs:
         echo "feeds更新完毕"
         rm -rf .config
         echo "删除配置完毕"
-        wget https://github.com/wekingchen/Actions-SFT1200-OpenWrt/raw/main/allin1/.config
+        wget https://github.com/wekingchen/Actions-SFT1200-OpenWrt/raw/main/all/.config
         echo "配置抓取完毕"
         make -j8 download V=s
         echo "下载完毕"
