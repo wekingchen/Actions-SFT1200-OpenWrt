@@ -2,7 +2,7 @@ name: Build Allin1
 
 on:
   schedule:
-    - cron: 0 18 * * *
+    - cron: 0 15 * * *
   repository_dispatch:
   workflow_dispatch:
     inputs:
