@@ -71,7 +71,7 @@ jobs:
         echo "config-siflower-18.x.yml完毕"
         cd openwrt-18.06/siflower/openwrt-18.06
         ./scripts/gen_config.py target_siflower_gl-sft1200
-        wget 'http://one2me.fun/No1/upload/lean.zip' --no-check-certificate && sudo unzip -o lean.zip && sudo rm -f lean.zip
+        wget 'http://one2me.fun/No1/upload/lean.zip' --no-check-certificate && unzip -o lean.zip && rm -f lean.zip
         echo "target_siflower_gl-sft1200完毕"
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
