@@ -70,7 +70,9 @@ jobs:
         echo "config-siflower-18.x.yml完毕"
         cd openwrt-18.06/siflower/openwrt-18.06
         ./scripts/gen_config.py target_siflower_gl-sft1200
-        wget 'https://myweb220214.000webhostapp.com/upload/lean.zip' --no-check-certificate && unzip -o lean.zip && rm -f lean.zip
+        wget 'https://myweb220214.000webhostapp.com/upload/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
+        git clone https://github.com/jerrykuku/go-aliyundrive-webdav package/go-aliyundrive-webdav
+        git clone https://github.com/jerrykuku/luci-app-go-aliyundrive-webdav package/luci-app-go-aliyundrive-webdav
         echo "target_siflower_gl-sft1200完毕"
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
