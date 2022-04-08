@@ -107,7 +107,7 @@ jobs:
           # 随机延迟0~15分钟后再进行操作,可自行设置时间
           delay 1
           pwd
-          ./rclone sync --user-agent "NONISV|Microsoft|Microsoft OneDrive for Windows/21.245.1128.0002" -v /home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/ tongji_test:/sft1200/ssr/
+          # ./rclone sync --user-agent "NONISV|Microsoft|Microsoft OneDrive for Windows/21.245.1128.0002" -v /home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/ tongji_test:/sft1200/ssr/
           echo "SharePoint上传完毕"
 
     - name: Check space usage
