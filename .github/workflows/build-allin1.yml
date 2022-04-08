@@ -109,7 +109,7 @@ jobs:
           delay 1
           pwd
           # ./rclone sync --user-agent "NONISV|Microsoft|Microsoft OneDrive for Windows/22.012.0117.0003" -v /home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/ tongji_test:/sft1200/allin1/
-          echo "SharePoint上传完毕"
+          # echo "SharePoint上传完毕"
 
     - name: Check space usage
       if: (!cancelled())
