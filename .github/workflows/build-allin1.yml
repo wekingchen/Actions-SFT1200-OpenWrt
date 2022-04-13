@@ -73,6 +73,7 @@ jobs:
         wget 'https://github.com/wekingchen/Actions-SFT1200-OpenWrt/raw/main/myfiles/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
         git clone https://github.com/jerrykuku/go-aliyundrive-webdav package/go-aliyundrive-webdav
         git clone https://github.com/jerrykuku/luci-app-go-aliyundrive-webdav package/luci-app-go-aliyundrive-webdav
+        git clone -b luci --single-branch https://github.com/xiaorouji/openwrt-passwall package/passwall
         echo "target_siflower_gl-sft1200完毕"
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
