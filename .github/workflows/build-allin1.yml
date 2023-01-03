@@ -111,8 +111,12 @@ jobs:
           # 随机延迟0~15分钟后再进行操作,可自行设置时间
           delay 1
           pwd
-          ./rclone sync -v /home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/ seafile:/allin1/
-          echo "SeaFile上传完毕"
+          Date=$(date +"%Y%m%d")
+          ./rclone sync -v /home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/ seafile:/allin1/$Date/
+          echo "SeaFile已上传 $Date 文件夹完毕"
+          DELTIME=`date -d "7 days ago" +%Y%m%d`
+          ./rclone purge seafile:/allin1/$DELTIME
+          echo "SeaFile已删除旧文件夹 $DELTIME"
 
     - name: Check space usage
       if: (!cancelled())
