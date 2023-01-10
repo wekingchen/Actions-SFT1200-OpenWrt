@@ -70,6 +70,7 @@ jobs:
         echo "config-siflower-18.x.yml完毕"
         cd openwrt-18.06/siflower/openwrt-18.06
         ./scripts/gen_config.py target_siflower_gl-sft1200
+        rm -rf feeds/packages/libs/boost
         wget 'https://github.com/wekingchen/Actions-SFT1200-OpenWrt/raw/main/myfiles/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
         git clone https://github.com/jerrykuku/go-aliyundrive-webdav package/go-aliyundrive-webdav
         git clone https://github.com/jerrykuku/luci-app-go-aliyundrive-webdav package/luci-app-go-aliyundrive-webdav
