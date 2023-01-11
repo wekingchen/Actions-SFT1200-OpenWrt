@@ -71,6 +71,11 @@ jobs:
         echo "config-siflower-18.x.yml完毕"
         cd openwrt-18.06/siflower/openwrt-18.06
         ./scripts/gen_config.py target_siflower_gl-sft1200
+        
+        # 使用旧版1.80.0的boost
+        rm -rf feeds/packages/libs/boost
+        wget 'https://github.com/wekingchen/Actions-SFT1200-OpenWrt/raw/main/myfiles/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
+        
         git clone -b luci --single-branch https://github.com/xiaorouji/openwrt-passwall package/passwall
         echo "target_siflower_gl-sft1200完毕"
         sed -i "/helloworld/d" "feeds.conf.default"
