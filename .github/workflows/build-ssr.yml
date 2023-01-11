@@ -72,6 +72,11 @@ jobs:
         cd openwrt-18.06/siflower/openwrt-18.06
         ./scripts/gen_config.py target_siflower_gl-sft1200
         echo "target_siflower_gl-sft1200完毕"
+        
+        # 使用旧版1.80.0的boost
+        rm -rf feeds/packages/libs/boost
+        wget 'https://github.com/wekingchen/Actions-SFT1200-OpenWrt/raw/main/myfiles/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
+
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
         echo "helloworld完毕"
