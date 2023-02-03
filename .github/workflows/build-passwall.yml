@@ -71,6 +71,11 @@ jobs:
         echo "config-siflower-18.x.yml完毕"
         cd openwrt-18.06/siflower/openwrt-18.06
         ./scripts/gen_config.py target_siflower_gl-sft1200
+        
+        # 使用旧版1.80.0的boost
+        rm -rf feeds/packages/libs/boost
+        wget 'https://github.com/wekingchen/Actions-SFT1200-OpenWrt/raw/main/myfiles/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
+        
         git clone -b luci --single-branch https://github.com/xiaorouji/openwrt-passwall package/passwall
         echo "target_siflower_gl-sft1200完毕"
         sed -i "/helloworld/d" "feeds.conf.default"
@@ -108,8 +113,12 @@ jobs:
           # 随机延迟0~15分钟后再进行操作,可自行设置时间
           delay 1
           pwd
-          ./rclone sync -v /home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/ seafile:/passwall/
-          echo "SeaFile上传完毕"
+          Date=$(date +"%Y%m%d")
+          ./rclone sync -v /home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/ seafile:/passwall/$Date/
+          echo "SeaFile已上传 $Date 文件夹完毕"
+          DELTIME=`date -d "7 days ago" +%Y%m%d`
+          ./rclone purge seafile:/passwall/$DELTIME
+          echo "SeaFile已删除旧文件夹 $DELTIME"
 
     - name: Check space usage
       if: (!cancelled())
