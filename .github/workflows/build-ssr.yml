@@ -9,7 +9,8 @@ on:
       ssh:
         description: 'SSH connection to Actions'
         required: false
-        default: 'false'
+        default: false
+        type: boolean
 
 env:
   UPLOAD_FIRMWARE: true
@@ -32,7 +33,7 @@ jobs:
         sudo apt-get full-upgrade -y
         sudo apt-get install -y expect ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler ecj fastjar flex gawk gettext gcc-multilib g++-multilib git git-core gperf haveged help2man intltool lib32gcc1 libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncurses5-dev libreadline-dev libssl-dev libtool libz-dev lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip python3-ply python-docutils qemu-utils re2c rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
         echo "update完成"
-        
+
     - name: Rclone-Install
       run: wget 'https://raw.githubusercontent.com/wekingchen/my-file/master/rclone/rclone.zip' --no-check-certificate && sudo unzip rclone.zip && sudo chmod a+x rclone && sudo rm -f rclone.zip
     - name: Rclone-Config
@@ -44,7 +45,7 @@ jobs:
           cat << EOF > ~/.config/rclone/rclone.conf
           $RCLONE_CONFIG
           EOF
-    
+
     - name: Create new user
       run: |
         sudo adduser "builder" <<EOF
@@ -72,10 +73,10 @@ jobs:
         cd openwrt-18.06/siflower/openwrt-18.06
         ./scripts/gen_config.py target_siflower_gl-sft1200
         echo "target_siflower_gl-sft1200完毕"
-        
+
         # 使用旧版1.80.0的boost
         rm -rf feeds/packages/libs/boost
-        wget 'https://github.com/wekingchen/Actions-SFT1200-OpenWrt/raw/main/myfiles/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
+        wget 'https://github.com/${{ GITHUB.REPOSITORY }}/raw/main/myfiles/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
 
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
@@ -85,8 +86,16 @@ jobs:
         echo "feeds更新完毕"
         rm -rf .config
         echo "删除配置完毕"
-        wget https://github.com/wekingchen/Actions-SFT1200-OpenWrt/raw/main/ssr/.config
+        wget https://github.com/${{ GITHUB.REPOSITORY }}/raw/main/ssr/.config
         echo "配置抓取完毕"
+
+    - name: Setup Debug Session
+      if: ${{ inputs.ssh }}
+      uses: csexton/debugger-action@master
+
+    - name: Build source code
+      run: |
+        cd gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06
         make -j8 download V=s
         echo "下载完毕"
         make -j1 V=s
@@ -103,7 +112,7 @@ jobs:
           {
           random_time=$(($RANDOM % $1))
           echo "等待 ${random_time} 分钟后开始同步"
-          for((i=1;i<=${random_time};i++));  
+          for((i=1;i<=${random_time};i++));
           do
           echo "倒计时 $[${random_time}-$i] 分钟"
           sleep 1m
@@ -135,7 +144,7 @@ jobs:
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd "/home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/"
-        
+
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
     - name: Upload firmware directory
@@ -156,7 +165,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
@@ -175,4 +184,4 @@ jobs:
         keep_latest: 3
         delete_tags: true
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
