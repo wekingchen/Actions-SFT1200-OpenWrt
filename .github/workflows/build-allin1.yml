@@ -4,17 +4,18 @@ on:
   schedule:
     - cron: 0 12 * * *
   repository_dispatch:
-  workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
+        description: 'SSH 连接 Actions'
+        required: false
+        default: false
+        type: boolean
+      UPLOAD_RELEASE:
+        description: '上传到发布页面'
         required: false
         default: false
         type: boolean
 
 env:
   UPLOAD_FIRMWARE: true
-  UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
 
 jobs:
@@ -156,7 +157,7 @@ jobs:
 
     - name: Generate release tag
       id: tag
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: ${{ inputs.UPLOAD_RELEASE }} && !cancelled()
       run: |
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
@@ -179,7 +180,7 @@ jobs:
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.1.0
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: ${{ inputs.UPLOAD_RELEASE }} && !cancelled()
       with:
         keep_latest: 3
         delete_tags: true
