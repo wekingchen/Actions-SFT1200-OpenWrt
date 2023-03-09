@@ -166,14 +166,10 @@ jobs:
         touch release.txt
         echo "::set-output name=status::success"
     - name: Upload firmware to release
-      uses: softprops/action-gh-release@v1
-      if: steps.tag.outputs.status == 'success' && !cancelled()
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+      uses: actions/upload-artifact@v2
       with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}
-        body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*
+        name: artifact-${{ github.run_number }}-${{ format('%t-%Y-%m-%d', github.event.head_commit.timestamp) }}
+        path: /home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
