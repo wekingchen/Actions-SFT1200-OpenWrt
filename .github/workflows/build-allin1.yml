@@ -179,6 +179,7 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: /home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/
         asset_name: SFT1200-$(date +%Y-%m-%d-%H-%M)
+        asset_content_type: application/octet-stream
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
