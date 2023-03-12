@@ -11,11 +11,6 @@ on:
         required: false
         default: false
         type: boolean
-      UPLOAD_RELEASE:
-        description: '上传到发布页面'
-        required: false
-        default: false
-        type: boolean
 
 env:
   UPLOAD_FIRMWARE: true
