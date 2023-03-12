@@ -79,6 +79,8 @@ jobs:
         wget 'https://github.com/${{ GITHUB.REPOSITORY }}/raw/main/myfiles/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
         rm -rf package/GL.iNet
         wget 'https://github.com/${{ GITHUB.REPOSITORY }}/raw/main/myfiles/GLiNet.zip' --no-check-certificate && unzip -o GLiNet.zip && rm -f GLiNet.zip
+        rm -rf target/linux/siflower
+        wget 'https://github.com/${{ GITHUB.REPOSITORY }}/raw/main/myfiles/siflower.zip' --no-check-certificate && unzip -o siflower.zip && rm -f siflower.zip
         git clone https://github.com/jerrykuku/go-aliyundrive-webdav package/go-aliyundrive-webdav
         git clone https://github.com/jerrykuku/luci-app-go-aliyundrive-webdav package/luci-app-go-aliyundrive-webdav
         git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
