@@ -14,7 +14,7 @@ on:
 
 env:
   UPLOAD_FIRMWARE: false
-  UPLOAD_RELEASE: false
+  UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
 
 jobs:
@@ -177,7 +177,7 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*
+        files: ${{ env.FIRMWARE }}/openwrt-*squashfs*
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
