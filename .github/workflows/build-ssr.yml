@@ -13,8 +13,8 @@ on:
         type: boolean
 
 env:
-  UPLOAD_FIRMWARE: true
-  UPLOAD_RELEASE: false
+  UPLOAD_FIRMWARE: false
+  UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
 
 jobs:
